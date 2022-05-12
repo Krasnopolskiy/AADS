@@ -1,0 +1,22 @@
+#include "models/node.h"
+
+#ifndef VIEW_H
+#define VIEW_H
+
+unsigned dialogMenu();
+
+unsigned dialogKey();
+
+unsigned dialogValue();
+
+void drawTree(Node *root);
+
+void printNode(Node *this);
+
+void printOffset(unsigned offset);
+
+void keyNotFoundError(unsigned key);
+
+void duplicateKeyError(unsigned key);
+
+#endif // VIEW_H

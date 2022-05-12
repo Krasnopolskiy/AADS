@@ -23,6 +23,10 @@ void controllerTreeProfiling(Controller *this);
 
 void controllerSearchInFile(Controller *this);
 
+void controllerSaveToFile(Controller *this);
+
+void controllerLoadFromFile(Controller *this);
+
 void controllerFree(Controller *this);
 
 controller controllers[] = {
@@ -32,7 +36,9 @@ controller controllers[] = {
         controllerSearch,
         controllerSearchAfter,
         controllerTreeProfiling,
-        controllerSearchInFile
+        controllerSearchInFile,
+        controllerSaveToFile,
+        controllerLoadFromFile
 };
 
 Node *controllerLoadOffsets() {
@@ -56,7 +62,7 @@ Controller *controllerInit() {
 void controllerRun(Controller *this) {
     while (1) {
         unsigned cmd = dialogMenu();
-        if (cmd == 7) break;
+        if (cmd == 9) break;
         controllers[cmd](this);
     }
     controllerFree(this);
@@ -112,9 +118,26 @@ void controllerSearchInFile(Controller *this) {
     else printOffset(node->value);
 }
 
+void controllerSaveToFile(Controller *this) {
+    FILE *file = fopen("tree.bin", "wb");
+    fclose(file);
+    nodeSaveToFile(this->root);
+}
+
+void controllerLoadFromFile(Controller *this) {
+    nodeFree(this->root);
+    FILE *file = fopen("tree.bin", "rb");
+    while (!feof(file)) {
+        unsigned key, value;
+        fread(&key, sizeof(unsigned), 1, file);
+        fread(&value, sizeof(unsigned), 1, file);
+        this->root = nodeInsert(this->root, key, value);
+    }
+    fclose(file);
+}
+
 void controllerFree(Controller *this) {
-    if (this->root != NULL)
-        nodeFree(this->root);
+    nodeFree(this->root);
     nodeFree(this->offsets);
     free(this);
 }

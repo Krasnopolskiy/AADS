@@ -22,6 +22,8 @@ void nodeSearchAfter(Node *this, unsigned key, Node **res);
 
 unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res);
 
+void nodeSaveToFile(Node *this);
+
 void nodeFree(Node *this);
 
 #endif // NODE_H

@@ -1,4 +1,5 @@
 #include "malloc.h"
+#include "stdio.h"
 #include "models/node.h"
 
 void nodeUpdateHeight(Node *this) {
@@ -115,8 +116,20 @@ unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res) {
     return 1;
 }
 
+void nodeSaveToFile(Node *this) {
+    if (this == NULL) return;
+    nodeSaveToFile(this->left);
+    FILE *file = fopen("tree.bin", "ab");
+    fwrite(&this->key, sizeof(unsigned), 1, file);
+    fwrite(&this->value, sizeof(unsigned), 1, file);
+    fclose(file);
+    nodeSaveToFile(this->right);
+}
+
 void nodeFree(Node *this) {
-    if (this->left != NULL) nodeFree(this->left);
-    if (this->right != NULL) nodeFree(this->right);
+    if (this == NULL) return;
+    nodeFree(this->left);
+    nodeFree(this->right);
     free(this);
+    this = NULL;
 }

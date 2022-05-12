@@ -3,7 +3,7 @@
 #include "views/io.h"
 #include "views/view.h"
 
-#define MENU_ITEMS 8
+#define MENU_ITEMS 10
 
 char *menuCommands[MENU_ITEMS] = {
         "Insert item",
@@ -13,6 +13,8 @@ char *menuCommands[MENU_ITEMS] = {
         "Search item with the smallest key bigger than the specified",
         "Tree profiling",
         "Find a value in a binary file",
+        "Save tree to file",
+        "Load tree from file",
         "Exit"
 };
 

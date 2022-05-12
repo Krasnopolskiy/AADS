@@ -20,7 +20,7 @@ Node *nodeSearch(Node *this, unsigned key);
 
 void nodeSearchAfter(Node *this, unsigned key, Node **res);
 
-unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res)
+unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res);
 
 void nodeFree(Node *this);
 

@@ -65,7 +65,8 @@ void controllerRun(Controller *this) {
 void controllerInsert(Controller *this) {
     unsigned key = dialogKey();
     unsigned value = dialogValue();
-    this->root = nodeInsert(this->root, key, value);
+    if (nodeSearch(this->root, key) != NULL) duplicateKeyError(key);
+    else this->root = nodeInsert(this->root, key, value);
 }
 
 void controllerDrop(Controller *this) {

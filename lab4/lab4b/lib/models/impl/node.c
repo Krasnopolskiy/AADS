@@ -1,5 +1,5 @@
-#include <malloc.h>
-#include <models/node.h>
+#include "malloc.h"
+#include "models/node.h"
 
 void nodeUpdateHeight(Node *this) {
     unsigned left = this->left ? this->left->height : 0;

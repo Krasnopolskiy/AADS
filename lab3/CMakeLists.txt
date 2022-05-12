@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(lab3 VERSION 0.1 LANGUAGES C)
 
-include_directories("${PROJECT_SOURCE_DIR}/lib-default")
+include_directories("../lab4/lab4a/lib")
 
 set(EXECUTABLE main.out)
 set(MODE file)

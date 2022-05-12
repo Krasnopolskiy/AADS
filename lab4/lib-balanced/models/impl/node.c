@@ -115,8 +115,6 @@ unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res) {
     return 1;
 }
 
-unsigned nodeSearchInFile(unsigned value);
-
 void nodeFree(Node *this) {
     if (this->left != NULL) nodeFree(this->left);
     if (this->right != NULL) nodeFree(this->right);

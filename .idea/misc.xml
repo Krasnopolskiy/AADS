@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/lab4/lab4b">
+  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$/lab4">
     <contentRoot DIR="$PROJECT_DIR$" />
   </component>
   <component name="CidrRootsConfiguration">
@@ -14,7 +14,7 @@
       <file path="$PROJECT_DIR$/lab3/lib/views" />
       <file path="$PROJECT_DIR$/lab4/lab4a/lib" />
       <file path="$PROJECT_DIR$/lab4/lab4a/lib/models" />
-      <file path="$PROJECT_DIR$/lab4/lab4b/lib" />
+      <file path="$PROJECT_DIR$/lab4/lib" />
     </sourceRoots>
   </component>
 </project>

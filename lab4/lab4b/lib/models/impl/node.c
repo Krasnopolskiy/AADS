@@ -75,9 +75,9 @@ Node *nodeInsert(Node *this, unsigned key, unsigned value) {
 
 Node *nodeDrop(Node *this, unsigned key) {
     if (this == NULL) return NULL;
-    if (this->key < key) {
+    if (this->key > key) {
         this->left = nodeDrop(this->left, key);
-    } else if (this->key > key) {
+    } else if (this->key < key) {
         this->right = nodeDrop(this->right, key);
     } else {
         Node *left = this->left;
@@ -87,7 +87,6 @@ Node *nodeDrop(Node *this, unsigned key) {
         Node *min = nodeSearchMin(right);
         min->right = nodeDropMin(right);
         min->left = left;
-        return nodeBalance(min);
     }
     return nodeBalance(this);
 }
@@ -100,20 +99,19 @@ Node *nodeSearch(Node *this, unsigned key) {
 }
 
 void nodeSearchAfter(Node *this, unsigned key, Node **res) {
-    if (this->key >= key && this->left) nodeSearchAfter(this->left, key, res);
-    if (this->key < key) {
-        if (*res == NULL || this->key > (*res)->key) *res = this;
-        if (this->right) nodeSearchAfter(this->right, key, res);
-    }
+    if (this == NULL) return;
+    if (this->key > key) {
+        if (*res == NULL || this->key < (*res)->key) *res = this;
+        nodeSearchAfter(this->left, key, res);
+    } else nodeSearchAfter(this->right, key, res);
 }
 
 unsigned nodeProfilingSearchAfter(Node *this, unsigned key, Node **res) {
-    if (this->key >= key && this->left) return 1 + nodeProfilingSearchAfter(this->left, key, res);
-    if (this->key < key) {
-        if (*res == NULL || this->key > (*res)->key) *res = this;
-        if (this->right) return 1 + nodeProfilingSearchAfter(this->right, key, res);
-    }
-    return 1;
+    if (this == NULL) return 1;
+    if (this->key > key) {
+        if (*res == NULL || this->key < (*res)->key) *res = this;
+        return 1 + nodeProfilingSearchAfter(this->left, key, res);
+    } else return 1 + nodeProfilingSearchAfter(this->right, key, res);
 }
 
 void nodeSaveToFile(Node *this) {

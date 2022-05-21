@@ -1,6 +1,7 @@
-#include "application/application.h"
-#include "handlers/keyspace1.h"
-#include "handlers/offset.h"
+#include "lib/application/application.h"
+#include "lib/handlers/keyspace1.h"
+#include "lib/handlers/offset.h"
+#include "lib/models/item.h"
 
 offset insertItem() {
     char *content = strdup("content"), *key1 = strdup("key1"), *key2 = strdup("key2");

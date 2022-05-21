@@ -2,6 +2,7 @@
 
 int main() {
     Graph *g = graphInit();
+
     graphVertexAdd(g);
     graphVertexAdd(g);
     graphVertexAdd(g);
@@ -20,9 +21,11 @@ int main() {
     graphEdgeAdd(g, 4, 5, 5);
     graphEdgeAdd(g, 5, 4, 1);
 
+    Vector *path = graphShortestPath(g, 0, 4);
+    vectorPrint(path);
+
     graphPrint(g);
 
     graphFree(g);
-
     return 0;
 }

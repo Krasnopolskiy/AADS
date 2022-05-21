@@ -8,6 +8,8 @@ typedef struct Vector {
 
 Vector *vectorInit(int size);
 
+Vector *vectorReverse(Vector *this);
+
 void vectorEnlarge(Vector *this);
 
 void vectorPush(Vector *this, int value);

@@ -7,7 +7,7 @@ typedef Matrix Graph;
 
 Graph *graphInit();
 
-Vector *graphPath(Graph *this, int id1, int id2);
+Vector *graphShortestPath(Graph *this, int start, int end);
 
 void graphVertexAdd(Graph *this);
 

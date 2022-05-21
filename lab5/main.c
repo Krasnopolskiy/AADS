@@ -21,8 +21,9 @@ int main() {
     graphEdgeAdd(g, 4, 5, 5);
     graphEdgeAdd(g, 5, 4, 1);
 
-    Vector *path = graphShortestPath(g, 0, 4);
-    vectorPrint(path);
+    vectorPrint(graphShortestPath(g, 0, 4));
+
+    vectorPrint(graphPath(g, 0, 4));
 
     graphPrint(g);
 

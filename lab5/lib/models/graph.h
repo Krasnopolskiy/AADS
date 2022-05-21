@@ -7,15 +7,17 @@ typedef Matrix Graph;
 
 Graph *graphInit();
 
+Vector *graphPath(Graph *this, int start, int end);
+
 Vector *graphShortestPath(Graph *this, int start, int end);
 
 void graphVertexAdd(Graph *this);
 
 void graphVertexRemove(Graph *this, int id);
 
-void graphEdgeAdd(Graph *this, int id1, int id2, int weight);
+void graphEdgeAdd(Graph *this, int start, int end, int weight);
 
-void graphEdgeRemove(Graph *this, int id1, int id2);
+void graphEdgeRemove(Graph *this, int start, int end);
 
 void graphPrint(Graph *this);
 

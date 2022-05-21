@@ -10,9 +10,9 @@ Vector *vectorInit(int size);
 
 Vector *vectorReverse(Vector *this);
 
-void vectorEnlarge(Vector *this);
+Vector *vectorPush(Vector *this, int value);
 
-void vectorPush(Vector *this, int value);
+void vectorEnlarge(Vector *this);
 
 void vectorPop(Vector *this, int index);
 

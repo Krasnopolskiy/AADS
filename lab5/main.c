@@ -11,6 +11,7 @@ int main() {
     graphVertexAdd(g);
 
     graphEdgeAdd(g, 0, 1, 3);
+    graphEdgeAdd(g, 0, 2, 8);
     graphEdgeAdd(g, 0, 3, 2);
     graphEdgeAdd(g, 0, 5, 7);
     graphEdgeAdd(g, 2, 0, 8);

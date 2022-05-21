@@ -16,18 +16,21 @@ Vector *vectorInit(int size) {
 }
 
 Vector *vectorReverse(Vector *this) {
+    if (this == NULL) return this;
     for (int i = 0; i < this->size / 2; i++) swap(&this->data[i], &this->data[this->size - i - 1]);
+    return this;
+}
+
+Vector *vectorPush(Vector *this, int value) {
+    if (this == NULL) return this;
+    vectorEnlarge(this);
+    this->data[this->size - 1] = value;
     return this;
 }
 
 void vectorEnlarge(Vector *this) {
     this->data = realloc(this->data, (this->size + 1) * sizeof(int));
     this->data[this->size++] = 0;
-}
-
-void vectorPush(Vector *this, int value) {
-    vectorEnlarge(this);
-    this->data[this->size - 1] = value;
 }
 
 void vectorPop(Vector *this, int index) {

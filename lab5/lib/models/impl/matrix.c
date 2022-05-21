@@ -23,10 +23,6 @@ void matrixPop(Matrix *this, int index) {
     this->size--;
 }
 
-void matrixFill(Matrix *this, int value) {
-    for (int i = 0; i < this->size; i++) vectorFill(this->rows[i], value);
-}
-
 void matrixPrint(Matrix *this) {
     for (int i = 0; i < this->size; i++) vectorPrint(this->rows[i]);
 }

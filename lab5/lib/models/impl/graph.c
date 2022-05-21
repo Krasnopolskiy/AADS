@@ -15,10 +15,7 @@ Vector *dfs(Graph *this, int v, int end, Vector *visited) {
     for (int i = 0; i < this->size; i++) {
         if (visited->data[i] == 1 || this->rows[v]->data[i] == 0) continue;
         Vector *res = dfs(this, i, end, visited);
-        if (res != NULL) {
-            vectorPush(res, i);
-            return res;
-        }
+        if (res != NULL) return vectorPush(res, i);;
     }
 
     return NULL;
@@ -51,7 +48,8 @@ Graph *graphInit() {
 
 Vector *graphPath(Graph *this, int start, int end) {
     Vector *visited = vectorInit(this->size);
-    return dfs(this, start, end, visited);
+    Vector *res = dfs(this, start, end, visited);
+    return vectorReverse(vectorPush(res, start));
 }
 
 Vector *graphShortestPath(Graph *this, int start, int end) {
@@ -61,8 +59,7 @@ Vector *graphShortestPath(Graph *this, int start, int end) {
         if (v == -1) return NULL;
         vectorPush(path, v);
     }
-    vectorPush(path, start);
-    return vectorReverse(path);
+    return vectorReverse(vectorPush(path, start));
 }
 
 void graphVertexAdd(Graph *this) {

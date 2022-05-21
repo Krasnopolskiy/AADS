@@ -14,8 +14,6 @@ void matrixEnlarge(Matrix *this);
 
 void matrixPop(Matrix *this, int index);
 
-void matrixFill(Matrix *this, int value);
-
 void matrixPrint(Matrix *this);
 
 void matrixFree(Matrix *this);

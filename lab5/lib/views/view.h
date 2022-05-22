@@ -9,19 +9,21 @@ char *dialogVertex();
 
 int dialogWeight();
 
-void printVector(Vector *this);
+void printPath(Vector *this, char **names);
 
 void printMatrix(Matrix *this);
 
 void printGraph(Graph *this, char **names);
 
-void drawGraph(Graph *this);
+void drawGraph(Graph *this, char **names);
 
 void errorVertexNotFound();
 
 void errorEdgeNotFound();
 
 void errorPathNotFound();
+
+void errorPathNotFoundOrNegativeCycle();
 
 void errorVertexAlreadyExists();
 

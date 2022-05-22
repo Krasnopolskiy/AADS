@@ -41,6 +41,7 @@ void vectorPop(Vector *this, int index) {
 }
 
 void vectorFree(Vector *this) {
+    if (this == NULL) return;
     free(this->data);
     free(this);
     this = NULL;

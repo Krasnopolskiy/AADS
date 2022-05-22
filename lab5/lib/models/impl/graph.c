@@ -33,6 +33,7 @@ Vector *bellmanFord(Graph *this, int start) {
             }
         }
     }
+    vectorFree(dist);
     return parents;
 }
 
@@ -43,16 +44,24 @@ Graph *graphInit() {
 Vector *graphPath(Graph *this, int start, int end) {
     Vector *visited = vectorInit(this->size, 0);
     Vector *res = dfs(this, start, end, visited);
+    vectorFree(visited);
     return vectorReverse(vectorPush(res, start));
 }
 
 Vector *graphShortestPath(Graph *this, int start, int end) {
     Vector *parents = bellmanFord(this, start);
-    Vector *path = vectorInit(0, 0);
+    Vector *path = vectorInit(0, 0), *visited = vectorInit(this->size, 0);
     for (int v = end; v != start; v = parents->data[v]) {
-        if (v == -1) return NULL;
+        if (v == -1 || visited->data[v] == 1) {
+            vectorFree(parents);
+            vectorFree(visited);
+            return NULL;
+        }
+        visited->data[v] = 1;
         vectorPush(path, v);
     }
+    vectorFree(parents);
+    vectorFree(visited);
     return vectorReverse(vectorPush(path, start));
 }
 

@@ -85,15 +85,17 @@ void controllerPath(Controller *this) {
     if (start == -1 || end == -1) return;
     Vector *path = graphPath(this->graph, start, end);
     if (path == NULL) errorPathNotFound();
-    else printVector(path);
+    else printPath(path, this->names);
+    vectorFree(path);
 }
 
 void controllerShortestPath(Controller *this) {
     int start = controllerGetVertexId(this), end = controllerGetVertexId(this);
     if (start == -1 || end == -1) return;
     Vector *path = graphShortestPath(this->graph, start, end);
-    if (path == NULL) errorPathNotFound();
-    else printVector(path);
+    if (path == NULL) errorPathNotFoundOrNegativeCycle();
+    else printPath(path, this->names);
+    vectorFree(path);
 }
 
 void controllerStrongConnectivity(Controller *this) {
@@ -142,7 +144,7 @@ void controllerPrintGraph(Controller *this) {
 }
 
 void controllerDrawGraph(Controller *this) {
-    return;
+    drawGraph(this->graph, this->names);
 }
 
 void controllerFree(Controller *this) {

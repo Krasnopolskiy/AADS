@@ -42,6 +42,11 @@ void printVector(Vector *this) {
     printf("\n");
 }
 
+void printPath(Vector *this, char **names) {
+    for (int i = 0; i < this->size; i++) printf("%5s", names[this->data[i]]);
+    printf("\n");
+}
+
 void printMatrix(Matrix *this) {
     for (int i = 0; i < this->size; i++) printVector(this->rows[i]);
 }
@@ -56,7 +61,26 @@ void printGraph(Graph *this, char **names) {
     }
 }
 
-void drawGraph(Graph *this);
+void drawGraph(Graph *this, char **names) {
+    FILE *file = fopen("graph.dot", "w");
+    fprintf(file, "strict digraph { node [shape=circle style=filled] ");
+    Vector *used = vectorInit(this->size, 0);
+    for (int u = 0; u < this->size; u++) {
+        for (int v = 0; v < this->size; v++) {
+            if (this->rows[u]->data[v] == 0) continue;
+            used->data[u] = 1;
+            used->data[v] = 1;
+            fprintf(file, "\"%s\" -> \"%s\" [label=%d] ", names[u], names[v], this->rows[u]->data[v]);
+        }
+    }
+    for (int i = 0; i < this->size; i++)
+        if (used->data[i] == 0) fprintf(file, "\"%s\" ", names[i]);
+    vectorFree(used);
+    fprintf(file, "}");
+    fclose(file);
+    system("dot graph.dot -Tpng -o graph.png");
+    printf("The graph is drawn in the graph.png\n");
+}
 
 void errorVertexNotFound() {
     printf("Error: vertex not found\n");
@@ -68,6 +92,10 @@ void errorEdgeNotFound() {
 
 void errorPathNotFound() {
     printf("Error: path not found\n");
+}
+
+void errorPathNotFoundOrNegativeCycle() {
+    printf("Error: path not found or contains negative cycles\n");
 }
 
 void errorVertexAlreadyExists() {

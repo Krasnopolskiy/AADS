@@ -8,10 +8,11 @@ void swap(int *a, int *b) {
     *b = k;
 }
 
-Vector *vectorInit(int size) {
+Vector *vectorInit(int size, int fill) {
     Vector *this = malloc(sizeof(Vector));
     this->size = size;
     this->data = calloc(size, sizeof(int));
+    for (int i = 0; i < size; i++) this->data[i] = fill;
     return this;
 }
 
@@ -37,19 +38,6 @@ void vectorPop(Vector *this, int index) {
     for (int i = index + 1; i < this->size; i++) this->data[i - 1] = this->data[i];
     this->data = realloc(this->data, (this->size - 1) * sizeof(int));
     this->size--;
-}
-
-void vectorFill(Vector *this, int value) {
-    for (int i = 0; i < this->size; i++) this->data[i] = value;
-}
-
-void vectorPrint(Vector *this) {
-    if (this == NULL) {
-        printf("null\n");
-    } else {
-        for (int i = 0; i < this->size; i++) printf("%3d ", this->data[i]);
-        printf("\n");
-    }
 }
 
 void vectorFree(Vector *this) {

@@ -12,9 +12,9 @@ Matrix *matrixInit(int size);
 
 void matrixEnlarge(Matrix *this);
 
-void matrixPop(Matrix *this, int index);
+void matrixPush(Matrix *this, Vector *row);
 
-void matrixPrint(Matrix *this);
+void matrixPop(Matrix *this, int index);
 
 void matrixFree(Matrix *this);
 

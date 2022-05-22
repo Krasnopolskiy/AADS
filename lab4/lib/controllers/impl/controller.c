@@ -71,13 +71,13 @@ void controllerRun(Controller *this) {
 void controllerInsert(Controller *this) {
     unsigned key = dialogKey();
     unsigned value = dialogValue();
-    if (nodeSearch(this->root, key) != NULL) duplicateKeyError(key);
+    if (nodeSearch(this->root, key) != NULL) errorVertexAlreadyExists(key);
     else this->root = nodeInsert(this->root, key, value);
 }
 
 void controllerDrop(Controller *this) {
     unsigned key = dialogKey();
-    if (nodeSearch(this->root, key) == NULL) keyNotFoundError(key);
+    if (nodeSearch(this->root, key) == NULL) errorVertexNotFound(key);
     else this->root = nodeDrop(this->root, key);
 }
 
@@ -88,7 +88,7 @@ void controllerDrawTree(Controller *this) {
 void controllerSearch(Controller *this) {
     unsigned key = dialogKey();
     Node *node = nodeSearch(this->root, key);
-    if (node == NULL) keyNotFoundError(0);
+    if (node == NULL) errorVertexNotFound(0);
     else printNode(node);
 }
 
@@ -114,7 +114,7 @@ void controllerTreeProfiling(Controller *this) {
 void controllerSearchInFile(Controller *this) {
     unsigned key = dialogValue();
     Node *node = nodeSearch(this->offsets, key);
-    if (node == NULL) keyNotFoundError(key);
+    if (node == NULL) errorVertexNotFound(key);
     else printOffset(node->value);
 }
 

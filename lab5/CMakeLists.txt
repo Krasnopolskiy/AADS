@@ -7,10 +7,9 @@ set(EXECUTABLE main)
 include_directories(lib)
 
 add_subdirectory(lib/models models)
-#add_subdirectory(lib/views views)
-#add_subdirectory(lib/controllers controllers)
+add_subdirectory(lib/views views)
+add_subdirectory(lib/controllers controllers)
 
 add_executable(${EXECUTABLE} main.c)
 
-target_link_libraries(${EXECUTABLE} models)
-#target_link_libraries(${EXECUTABLE} controllers)
+target_link_libraries(${EXECUTABLE} controllers)

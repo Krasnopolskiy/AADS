@@ -73,10 +73,10 @@ void printOffset(unsigned offset) {
     printf("Offset: %d\n", offset);
 }
 
-void keyNotFoundError(unsigned key) {
+void nameNotFoundError(unsigned key) {
     printf("Key '%d' not found\n", key);
 }
 
-void duplicateKeyError(unsigned key) {
+void errorDuplicateName(unsigned key) {
     printf("Key '%d' is duplicated\n", key);
 }

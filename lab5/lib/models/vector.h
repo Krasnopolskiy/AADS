@@ -6,7 +6,7 @@ typedef struct Vector {
     int *data;
 } Vector;
 
-Vector *vectorInit(int size);
+Vector *vectorInit(int size, int fill);
 
 Vector *vectorReverse(Vector *this);
 
@@ -15,10 +15,6 @@ Vector *vectorPush(Vector *this, int value);
 void vectorEnlarge(Vector *this);
 
 void vectorPop(Vector *this, int index);
-
-void vectorFill(Vector *this, int value);
-
-void vectorPrint(Vector *this);
 
 void vectorFree(Vector *this);
 

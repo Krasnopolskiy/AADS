@@ -15,8 +15,8 @@ void printNode(Node *this);
 
 void printOffset(unsigned offset);
 
-void keyNotFoundError(unsigned key);
+void nameNotFoundError(unsigned key);
 
-void duplicateKeyError(unsigned key);
+void errorDuplicateName(unsigned key);
 
 #endif // VIEW_H

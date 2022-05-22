@@ -4,11 +4,7 @@
 #define INF 2147483647
 
 Vector *dfs(Graph *this, int v, int end, Vector *visited) {
-    if (this->rows[v]->data[end] != 0) {
-        Vector *res = vectorInit(1);
-        res->data[0] = end;
-        return res;
-    }
+    if (this->rows[v]->data[end] != 0) return vectorInit(1, end);
 
     visited->data[v] = 1;
 
@@ -22,10 +18,8 @@ Vector *dfs(Graph *this, int v, int end, Vector *visited) {
 }
 
 Vector *bellmanFord(Graph *this, int start) {
-    Vector *dist = vectorInit(this->size);
-    Vector *parents = vectorInit(this->size);
-    vectorFill(dist, INF);
-    vectorFill(parents, -1);
+    Vector *dist = vectorInit(this->size, INF);
+    Vector *parents = vectorInit(this->size, -1);
     dist->data[start] = 0;
     for (int i = 0; i < this->size - 1; i++) {
         for (int u = 0; u < this->size; u++) {
@@ -47,14 +41,14 @@ Graph *graphInit() {
 }
 
 Vector *graphPath(Graph *this, int start, int end) {
-    Vector *visited = vectorInit(this->size);
+    Vector *visited = vectorInit(this->size, 0);
     Vector *res = dfs(this, start, end, visited);
     return vectorReverse(vectorPush(res, start));
 }
 
 Vector *graphShortestPath(Graph *this, int start, int end) {
     Vector *parents = bellmanFord(this, start);
-    Vector *path = vectorInit(0);
+    Vector *path = vectorInit(0, 0);
     for (int v = end; v != start; v = parents->data[v]) {
         if (v == -1) return NULL;
         vectorPush(path, v);
@@ -76,10 +70,6 @@ void graphEdgeAdd(Graph *this, int start, int end, int weight) {
 
 void graphEdgeRemove(Graph *this, int start, int end) {
     this->rows[start]->data[end] = 0;
-}
-
-void graphPrint(Graph *this) {
-    matrixPrint(this);
 }
 
 void graphFree(Graph *this) {

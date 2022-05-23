@@ -1,4 +1,4 @@
-#include "keyspace2.h"
+#include "../keyspace2.h"
 
 offset fileKeySpace2Append(KeySpace2 *keySpace) {
     FILE *file = fopen(FILENAME, MODE);

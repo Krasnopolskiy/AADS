@@ -1,5 +1,5 @@
 #include "handlers/offset.h"
-#include "item.h"
+#include "../item.h"
 
 offset fileItemAppend(Item *item) {
     item->value = (char *) fileStringAppend(item->value);

@@ -1,5 +1,5 @@
 #include "models/table.h"
-#include "table.h"
+#include "../table.h"
 
 Table *fileTableLoad(offset ptr) {
     Table *table = malloc(sizeof(Table));

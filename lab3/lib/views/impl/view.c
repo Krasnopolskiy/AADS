@@ -1,4 +1,4 @@
-#include "views/view.h"
+#include "../../../../lab4/lib/views/view.h"
 
 #define OPTIONS_SIZE 10
 

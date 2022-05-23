@@ -1,4 +1,4 @@
-file(GLOB SOURCES "${MODE}/*.c")
+file(GLOB SOURCES "impl/${MODE}/*.c")
 
 add_library(application STATIC ${SOURCES})
 

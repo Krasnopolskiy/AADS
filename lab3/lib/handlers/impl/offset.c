@@ -1,4 +1,4 @@
-#include "offset.h"
+#include "../offset.h"
 
 void offsetAppend(offset ptr) {
     FILE *file = fopen(FILENAME, MODE);

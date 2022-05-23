@@ -1,4 +1,4 @@
-#include "views/io.h"
+#include "../../../../lab4/lib/views/io.h"
 
 char *getStr(char *message) {
     char buf[81] = {0};

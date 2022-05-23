@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../common.h"
 
 void fileInit() {
     FILE *file = fopen(FILENAME, "ab+");

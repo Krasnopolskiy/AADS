@@ -1,18 +1,22 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-typedef struct
-{
+typedef struct Vector {
     size_t size;
     size_t used;
     int *data;
-} vector;
+} Vector;
 
-void vector_init(vector *this);
-void vector_push(vector *this, int value);
-void vector_copy(vector *dest, vector *src);
-void vector_scan(vector *this);
-void vector_print(vector *this);
-void vector_free(vector *this);
+void vectorInit(Vector *this);
 
-#endif
+void vectorPush(Vector *this, int value);
+
+void vectorCopy(Vector *dest, Vector *src);
+
+void vectorScan(Vector *this);
+
+void vectorPrint(Vector *this);
+
+void vectorFree(Vector *this);
+
+#endif // VECTOR_H

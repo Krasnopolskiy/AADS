@@ -3,15 +3,17 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-typedef struct
-{
+typedef struct Matrix {
     size_t size;
-    vector *rows;
-} matrix;
+    Vector *rows;
+} Matrix;
 
-void matrix_init(matrix *this, size_t size);
-void matrix_scan(matrix *this);
-void matrix_print(matrix *this);
-void matrix_free(matrix *this);
+void matrixInit(Matrix *this, size_t size);
+
+void matrixScan(Matrix *this);
+
+void matrixPrint(Matrix *this);
+
+void matrixFree(Matrix *this);
 
 #endif

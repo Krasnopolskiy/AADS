@@ -2,37 +2,37 @@
 #include "stdio.h"
 #include "string.h"
 
-#include "io_utils.h"
+#include "io.h"
 #include "vector.h"
 
-void vector_init(vector *this) {
+void vectorEnlarge(Vector *this) {
+    this->size *= 2;
+    this->data = realloc(this->data, this->size * sizeof(int));
+}
+
+void vectorInit(Vector *this) {
     this->size = 1;
     this->used = 0;
     this->data = malloc(this->size * sizeof(int));
 }
 
-void vector_enlarge(vector *this) {
-    this->size *= 2;
-    this->data = realloc(this->data, this->size * sizeof(int));
-}
-
-void vector_push(vector *this, int value) {
+void vectorPush(Vector *this, int value) {
     if (this->used == this->size)
-        vector_enlarge(this);
+        vectorEnlarge(this);
     this->data[this->used++] = value;
 }
 
-void vector_copy(vector *dest, vector *src) {
+void vectorCopy(Vector *dest, Vector *src) {
     for (int i = 0; i < src->used; i++)
-        vector_push(dest, src->data[i]);
+        vectorPush(dest, src->data[i]);
 }
 
-void vector_scan(vector *this) {
+void vectorScan(Vector *this) {
     int success = 0;
     do {
-        vector result;
-        vector_init(&result);
-        char *source = get_str();
+        Vector result;
+        vectorInit(&result);
+        char *source = getStr();
         char *str = source;
         while (strlen(str) > 0) {
             int i = 0;
@@ -42,30 +42,30 @@ void vector_scan(vector *this) {
             strncpy(word, str, i);
             word[i] = 0;
             int num = 0;
-            success = parse_int(word, &num);
+            success = parseInt(word, &num);
             if (!success) {
                 printf("Invalid value '%s'. Try again\n", word);
                 free(word);
                 break;
             }
-            vector_push(&result, num);
+            vectorPush(&result, num);
             str += i + 1 < strlen(str) ? i + 1 : i;
             free(word);
         }
         free(source);
         if (success)
-            vector_copy(this, &result);
-        vector_free(&result);
+            vectorCopy(this, &result);
+        vectorFree(&result);
     } while (!success);
 }
 
-void vector_print(vector *this) {
+void vectorPrint(Vector *this) {
     for (int i = 0; i < this->used; i++)
         printf("%3d ", this->data[i]);
     printf("\n");
 }
 
-void vector_free(vector *this) {
+void vectorFree(Vector *this) {
     free(this->data);
     this->data = NULL;
     this->used = this->size = 0;

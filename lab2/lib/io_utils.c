@@ -4,7 +4,7 @@
 
 #include "io_utils.h"
 
-char *get_str() {
+char *getStr() {
     char buf[81] = {0};
     char *res = NULL;
     int len = 0, n = 0;
@@ -31,7 +31,7 @@ char *get_str() {
     return res;
 }
 
-int parse_int(char *str, int *res) {
+int parseInt(char *str, int *res) {
     *res = 0;
     int i = 0, sign = 1;
 
@@ -58,7 +58,7 @@ int parse_int(char *str, int *res) {
     return 1;
 }
 
-int scan_int(char *message) {
+int scanInt(char *message) {
     int success = 0, res = 0;
     do {
         printf("%s", message);
@@ -71,7 +71,7 @@ int scan_int(char *message) {
     return res;
 }
 
-int scan_size(char *message)
+int scanSize(char *message)
 {   
     int size = 0;
     do

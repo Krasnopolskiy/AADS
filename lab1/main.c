@@ -1,9 +1,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-#include "lib/vector.h"
+#include "lib/io.h"
 #include "lib/matrix.h"
-#include "lib/io_utils.h"
 
 int sum_digits(int n) {
     n = abs(n);
@@ -15,30 +14,29 @@ int sum_digits(int n) {
     return sum;
 }
 
-int main()
-{
-    int m = scan_size("m: ");
-    matrix src, res;
-    matrix_init(&src, m);
-    matrix_init(&res, m);
+int main() {
+    int m = scanSize("m: ");
+    Matrix src, res;
+    matrixInit(&src, m);
+    matrixInit(&res, m);
 
-    matrix_scan(&src);
+    matrixScan(&src);
 
     for (int i = 0; i < m; i++) {
-        vector current = src.rows[i];
+        Vector current = src.rows[i];
         int last = sum_digits(current.data[current.used - 1]);
 
         for (int j = 0; j < current.used; j++)
             if (sum_digits(current.data[j]) == last)
-                vector_push(&res.rows[i], current.data[j]);
+                vectorPush(&res.rows[i], current.data[j]);
     }
 
     printf("Source matrix:\n");
-    matrix_print(&src);
+    matrixPrint(&src);
     printf("Result matrix:\n");
-    matrix_print(&res);
+    matrixPrint(&res);
 
-    matrix_free(&src);
-    matrix_free(&res);
+    matrixFree(&src);
+    matrixFree(&res);
     return 0;
 }

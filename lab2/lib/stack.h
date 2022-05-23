@@ -1,20 +1,26 @@
 #ifndef STACK_H
 #define STACK_H
 
-typedef struct
-{
+typedef struct {
     void *data;
-} stack;
+} Stack;
 
-void stack_init(stack *this);
-void stack_pop(stack *this);
-void stack_copy(stack *dest, stack *src);
-void stack_print(stack *this);
-void stack_free(stack *this);
+void stackInit(Stack *this);
 
-int stack_push(stack *this, int value);
-int stack_size(stack *this);
-int stack_top(stack *this, int *result);
-int stack_top_pop(stack *this, int *result);
+void stackPop(Stack *this);
+
+void stackCopy(Stack *dest, Stack *src);
+
+void stackPrint(Stack *this);
+
+void stackFree(Stack *this);
+
+int stackPush(Stack *this, int value);
+
+int stackSize(Stack *this);
+
+int stackTop(Stack *this, int *result);
+
+int stackTopPop(Stack *this, int *res);
 
 #endif

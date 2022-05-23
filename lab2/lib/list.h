@@ -1,26 +1,32 @@
+#include "stdlib.h"
+
 #ifndef LIST_H
 #define LIST_H
 
-typedef struct node
-{
+typedef struct Node {
     int value;
-    struct node *next;
-} node;
+    struct Node *next;
+} Node;
 
-typedef struct
-{
+typedef struct List {
     size_t size;
-    node *top;
-} list;
+    Node *top;
+} List;
 
-void list_init(list *this);
-void list_push(list *this, int value);
-void list_pop(list *this);
-void list_copy(list *dest, list *src);
-void list_print(list *this);
-void list_free(list *this);
+void listInit(List *this);
 
-int list_top(list *this, int *res);
-int list_top_pop(list *this, int *res);
+void listPush(List *this, int value);
+
+void listPop(List *this);
+
+void listCopy(List *dest, List *src);
+
+void listPrint(List *this);
+
+void listFree(List *this);
+
+int listTop(List *this, int *res);
+
+int listTopPop(List *this, int *res);
 
 #endif

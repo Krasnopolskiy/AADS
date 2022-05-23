@@ -1,20 +1,28 @@
+#include "stdlib.h"
+
 #ifndef VECTOR_H
 #define VECTOR_H
 
-typedef struct {
+typedef struct Vector {
     size_t size;
     size_t used;
     int *data;
-} vector;
+} Vector;
 
-void vector_init(vector *this, size_t size);
-void vector_pop(vector *this);
-void vector_copy(vector *dest, vector *src);
-void vector_print(vector *this);
-void vector_free(vector *this);
+void vectorInit(Vector *this, size_t size);
 
-int vector_push(vector *this, int value);
-int vector_top(vector *this, int *result);
-int vector_top_pop(vector *this, int *res);
+void vectorPop(Vector *this);
+
+void vectorCopy(Vector *dest, Vector *src);
+
+void vectorPrint(Vector *this);
+
+void vectorFree(Vector *this);
+
+int vectorPush(Vector *this, int value);
+
+int vectorTop(Vector *this, int *result);
+
+int vectorTopPop(Vector *this, int *res);
 
 #endif

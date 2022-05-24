@@ -8,7 +8,7 @@ Item *itemCopy(char *content, char *key1, char *key2) {
     this->key1 = strdup(key1);
     this->key2 = strdup(key2);
     this->version = 0;
-    this->next = NULL;
+    this->name = NULL;
     return this;
 }
 
@@ -18,7 +18,7 @@ Item *itemInit(char *content, char *key1, char *key2) {
     this->key1 = key1;
     this->key2 = key2;
     this->version = 0;
-    this->next = NULL;
+    this->name = NULL;
     return this;
 }
 
@@ -34,21 +34,21 @@ Item *itemDup(Item *this) {
 }
 
 Item *itemNext(Item *this) {
-    return this->next;
+    return this->name;
 }
 
 void itemConnect(Item *this, Item *next) {
-    if (this->next != NULL) {
-        itemConnect(this->next, next);
+    if (this->name != NULL) {
+        itemConnect(this->name, next);
     } else {
-        this->next = next;
+        this->name = next;
         next->version = this->version + 1;
     }
 }
 
 void itemFree(Item *this) {
-    if (this->next != NULL)
-        itemFree(this->next);
+    if (this->name != NULL)
+        itemFree(this->name);
     free(this->value);
     free(this->key1);
     free(this->key2);

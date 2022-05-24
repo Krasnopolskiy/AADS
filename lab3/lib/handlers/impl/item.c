@@ -16,7 +16,7 @@ offset fileItemAppend(Item *item) {
     fwrite(&item->key2, sizeof(offset), 1, file);
     fwrite(&item->version, sizeof(unsigned long), 1, file);
     offsetAppend(ftell(file));
-    fwrite(&item->next, sizeof(offset), 1, file);
+    fwrite(&item->name, sizeof(offset), 1, file);
     fclose(file);
     return ptr;
 }
@@ -29,7 +29,7 @@ Item *fileItemLoad(offset ptr) {
     fread(&item->key1, sizeof(offset), 1, file);
     fread(&item->key2, sizeof(offset), 1, file);
     fread(&item->version, sizeof(unsigned long), 1, file);
-    fread(&item->next, sizeof(offset), 1, file);
+    fread(&item->name, sizeof(offset), 1, file);
     fclose(file);
     item->value = fileStringLoad((offset) item->value);
     item->key1 = fileStringLoad((offset) item->key1);
@@ -41,7 +41,7 @@ void fileItemUpdate(offset ptr, Item *item) {
     FILE *file = fopen(FILENAME, MODE);
     fseek(file, (long) (ptr + sizeof(offset) * 3), SEEK_SET);
     fwrite(&item->version, sizeof(item->version), 1, file);
-    fwrite(&item->next, sizeof(item->next), 1, file);
+    fwrite(&item->name, sizeof(item->name), 1, file);
     fclose(file);
 }
 

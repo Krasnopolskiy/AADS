@@ -9,7 +9,7 @@ void listInit(List *this) {
 void listPush(List *this, int value) {
     Node *new = malloc(sizeof(Node));
     new->value = value;
-    new->next = this->top;
+    new->name = this->top;
     this->top = new;
     this->size++;
 }
@@ -17,7 +17,7 @@ void listPush(List *this, int value) {
 void listPop(List *this) {
     if (this->top == NULL) return;
     Node *tmp = this->top;
-    this->top = this->top->next;
+    this->top = this->top->name;
     this->size--;
     free(tmp);
 }
@@ -26,7 +26,7 @@ void listCopy(List *dest, List *src) {
     Node *tmp = src->top;
     while (tmp != NULL) {
         listPush(dest, tmp->value);
-        tmp = tmp->next;
+        tmp = tmp->name;
     }
 }
 
@@ -34,7 +34,7 @@ void listPrint(List *this) {
     Node *tmp = this->top;
     while (tmp != NULL) {
         printf("%3d ", tmp->value);
-        tmp = tmp->next;
+        tmp = tmp->name;
     }
     printf("\n");
 }
@@ -42,7 +42,7 @@ void listPrint(List *this) {
 void listFree(List *this) {
     while (this->top != NULL) {
         Node *tmp = this->top;
-        this->top = this->top->next;
+        this->top = this->top->name;
         free(tmp);
     }
     free(this->top);

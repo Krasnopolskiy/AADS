@@ -2,6 +2,7 @@
 #include "string.h"
 #include "stdio.h"
 
+#include "models/station.h"
 #include "views/io.h"
 #include "views/view.h"
 #include "controllers/controller.h"
@@ -80,7 +81,7 @@ Controller *controllerInit() {
 void controllerRun(Controller *this) {
     while (1) {
         int cmd = dialogMenu();
-        if (cmd == 9) break;
+        if (cmd == 10) break;
         controllers[cmd](this);
     }
     controllerFree(this);
@@ -146,26 +147,20 @@ void controllerEdgeRemove(Controller *this) {
 }
 
 void controllerLoadMetro(Controller *this) {
-//    controllerReset(this);
     FILE *file = fopen("metro.csv", "r");
     free(getStrFile(file));
-    while (1) {
-        char *str = getStrFile(file);
-        if (feof(file)) break;
-        char *delim = ",", *word = strtok(str, delim);
-        char *name = word;
-        word = strtok(NULL, delim);
-        char *prev = word;
-        word = strtok(NULL, delim);
-        int weight = atof(word);
+    char *str;
+    while (str = getStrFile(file)) {
+        Station *station = stationParse(str);
         graphVertexAdd(this->graph);
-        controllerNamePush(this, name);
-        int u = controllerFindVertexId(this, name);
-        int v = controllerFindVertexId(this, prev);
+        controllerNamePush(this, station->name);
+        int u = controllerFindVertexId(this, station->name);
+        int v = controllerFindVertexId(this, station->prev);
         if (v != -1) {
-            graphEdgeAdd(this->graph, u, v, weight);
-            graphEdgeAdd(this->graph, v, u, weight);
+            graphEdgeAdd(this->graph, u, v, station->weight);
+            graphEdgeAdd(this->graph, v, u, station->weight);
         }
+        free(station);
     }
 }
 

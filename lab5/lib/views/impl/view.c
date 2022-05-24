@@ -2,7 +2,7 @@
 #include "views/io.h"
 #include "views/view.h"
 
-#define MENU_ITEMS 10
+#define MENU_ITEMS 11
 
 char *menuCommands[MENU_ITEMS] = {
         "Find path between two vertices (DFS)",
@@ -12,6 +12,7 @@ char *menuCommands[MENU_ITEMS] = {
         "Add edge",
         "Remove vertex",
         "Remove edge",
+        "Load Moscow metro",
         "Print graph",
         "Draw graph",
         "Exit"
@@ -63,7 +64,7 @@ void printGraph(Graph *this, char **names) {
 
 void drawGraph(Graph *this, char **names) {
     FILE *file = fopen("graph.dot", "w");
-    fprintf(file, "strict digraph { node [shape=circle style=filled] ");
+    fprintf(file, "strict digraph { node [style=filled] ");
     Vector *used = vectorInit(this->size, 0);
     for (int u = 0; u < this->size; u++) {
         for (int v = 0; v < this->size; v++) {

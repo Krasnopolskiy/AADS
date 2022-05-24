@@ -4,6 +4,8 @@ project(lab5 VERSION 0.1 LANGUAGES C)
 
 set(EXECUTABLE main)
 
+file(COPY assets/metro.csv DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 include_directories(lib)
 
 add_subdirectory(lib/models models)

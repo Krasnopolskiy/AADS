@@ -1,5 +1,8 @@
 #include "stdlib.h"
 #include "string.h"
+#include "stdio.h"
+
+#include "views/io.h"
 #include "views/view.h"
 #include "controllers/controller.h"
 
@@ -19,6 +22,8 @@ void controllerVertexRemove(Controller *this);
 
 void controllerEdgeRemove(Controller *this);
 
+void controllerLoadMetro(Controller *this);
+
 void controllerPrintGraph(Controller *this);
 
 void controllerDrawGraph(Controller *this);
@@ -33,8 +38,9 @@ controller controllers[] = {
         controllerEdgeAdd,
         controllerVertexRemove,
         controllerEdgeRemove,
+        controllerLoadMetro,
         controllerPrintGraph,
-        controllerDrawGraph
+        controllerDrawGraph,
 };
 
 int controllerFindVertexId(Controller *this, char *name) {
@@ -67,7 +73,7 @@ Controller *controllerInit() {
     Controller *this = malloc(sizeof(Controller));
     this->size = 0;
     this->graph = graphInit();
-    this->names = malloc(0);
+    this->names = NULL;
     return this;
 }
 
@@ -137,6 +143,30 @@ void controllerEdgeRemove(Controller *this) {
         return;
     }
     graphEdgeRemove(this->graph, start, end);
+}
+
+void controllerLoadMetro(Controller *this) {
+//    controllerReset(this);
+    FILE *file = fopen("metro.csv", "r");
+    free(getStrFile(file));
+    while (1) {
+        char *str = getStrFile(file);
+        if (feof(file)) break;
+        char *delim = ",", *word = strtok(str, delim);
+        char *name = word;
+        word = strtok(NULL, delim);
+        char *prev = word;
+        word = strtok(NULL, delim);
+        int weight = atof(word);
+        graphVertexAdd(this->graph);
+        controllerNamePush(this, name);
+        int u = controllerFindVertexId(this, name);
+        int v = controllerFindVertexId(this, prev);
+        if (v != -1) {
+            graphEdgeAdd(this->graph, u, v, weight);
+            graphEdgeAdd(this->graph, v, u, weight);
+        }
+    }
 }
 
 void controllerPrintGraph(Controller *this) {

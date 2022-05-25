@@ -98,6 +98,8 @@ Matrix *graphStrongConnectivity(Graph *this) {
         Vector *connectivity = dfsStrongConnectivity(this, order->data[i], visited);
         matrixPush(res, connectivity);
     }
+    vectorFree(visited);
+    vectorFree(order);
     return res;
 }
 

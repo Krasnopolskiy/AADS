@@ -30,6 +30,7 @@ Vector *vectorPush(Vector *this, int value) {
 
 void vectorMerge(Vector *v1, Vector *v2) {
     for (int i = 0; i < v2->size; i++) vectorPush(v1, v2->data[i]);
+    vectorFree(v2);
 }
 
 void vectorEnlarge(Vector *this) {

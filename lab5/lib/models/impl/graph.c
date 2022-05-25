@@ -1,20 +1,41 @@
 #include "stdlib.h"
+#include "stdio.h"
 #include "models/graph.h"
 
 #define INF 2147483647
 
-Vector *dfs(Graph *this, int v, int end, Vector *visited) {
-    if (this->rows[v]->data[end] != 0) return vectorInit(1, end);
+Vector *dfs(Graph *this, int start, int end, Vector *visited) {
+    if (this->rows[start]->data[end] != 0) return vectorInit(1, end);
 
-    visited->data[v] = 1;
+    visited->data[start] = 1;
 
     for (int i = 0; i < this->size; i++) {
-        if (visited->data[i] == 1 || this->rows[v]->data[i] == 0) continue;
+        if (visited->data[i] == 1 || this->rows[start]->data[i] == 0) continue;
         Vector *res = dfs(this, i, end, visited);
         if (res != NULL) return vectorPush(res, i);;
     }
 
     return NULL;
+}
+
+Vector *dfsTopSort(Graph *this, int start, Vector *visited) {
+    Vector *order = vectorInit(0, 0);
+    visited->data[start] = 1;
+    for (int i = 0; i < this->size; i++) {
+        if (this->rows[start]->data[i] == 0 || visited->data[i] == 1) continue;
+        vectorMerge(order, dfsTopSort(this, i, visited));
+    }
+    return vectorPush(order, start);
+}
+
+Vector *dfsStrongConnectivity(Graph *this, int start, Vector *visited) {
+    visited->data[start] = 1;
+    Vector *res = vectorInit(1, start);
+    for (int i = 0; i < this->size; i++) {
+        if (this->rows[start]->data[i] == 0 || visited->data[i] == 1) continue;
+        vectorMerge(res, dfsStrongConnectivity(this, i, visited));
+    }
+    return res;
 }
 
 Vector *bellmanFord(Graph *this, int start) {
@@ -63,6 +84,21 @@ Vector *graphShortestPath(Graph *this, int start, int end) {
     vectorFree(parents);
     vectorFree(visited);
     return vectorReverse(vectorPush(path, start));
+}
+
+Matrix *graphStrongConnectivity(Graph *this) {
+    Matrix *res = matrixInit(0);
+    Vector *visited = vectorInit(this->size, 0);
+    Vector *order = vectorInit(0, 0);
+    for (int i = 0; i < this->size; i++)
+        if (visited->data[i] == 0) vectorMerge(order, dfsTopSort(this, i, visited));
+    for (int i = 0; i < visited->size; i++) visited->data[i] = 0;
+    for (int i = 0; i < order->size; i++) {
+        if (visited->data[order->data[i]] == 1) continue;
+        Vector *connectivity = dfsStrongConnectivity(this, order->data[i], visited);
+        matrixPush(res, connectivity);
+    }
+    return res;
 }
 
 void graphVertexAdd(Graph *this) {

@@ -1,5 +1,4 @@
 #include "stdlib.h"
-#include "stdio.h"
 #include "models/vector.h"
 
 void swap(int *a, int *b) {
@@ -27,6 +26,10 @@ Vector *vectorPush(Vector *this, int value) {
     vectorEnlarge(this);
     this->data[this->size - 1] = value;
     return this;
+}
+
+void vectorMerge(Vector *v1, Vector *v2) {
+    for (int i = 0; i < v2->size; i++) vectorPush(v1, v2->data[i]);
 }
 
 void vectorEnlarge(Vector *this) {

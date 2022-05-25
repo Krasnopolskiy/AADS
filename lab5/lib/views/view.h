@@ -11,7 +11,7 @@ int dialogWeight();
 
 void printPath(Vector *this, char **names);
 
-void printMatrix(Matrix *this);
+void printMatrix(Matrix *this, char **names);
 
 void printGraph(Graph *this, char **names);
 

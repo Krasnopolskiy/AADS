@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "stdlib.h"
 #include "views/io.h"
 #include "views/view.h"
 
@@ -39,25 +40,25 @@ int dialogWeight() {
 }
 
 void printVector(Vector *this) {
-    for (int i = 0; i < this->size; i++) printf("%5d", this->data[i]);
+    for (int i = 0; i < this->size; i++) printf("%5d ", this->data[i]);
     printf("\n");
 }
 
 void printPath(Vector *this, char **names) {
-    for (int i = 0; i < this->size; i++) printf("%5s", names[this->data[i]]);
+    for (int i = 0; i < this->size; i++) printf("%5s ", names[this->data[i]]);
     printf("\n");
 }
 
-void printMatrix(Matrix *this) {
-    for (int i = 0; i < this->size; i++) printVector(this->rows[i]);
+void printMatrix(Matrix *this, char **names) {
+    for (int i = 0; i < this->size; i++) printPath(this->rows[i], names);
 }
 
 void printGraph(Graph *this, char **names) {
-    printf("     ");
-    for (int i = 0; i < this->size; i++) printf("%5s", names[i]);
+    printf("      ");
+    for (int i = 0; i < this->size; i++) printf("%5s ", names[i]);
     printf("\n");
     for (int i = 0; i < this->size; i++) {
-        printf("%5s", names[i]);
+        printf("%5s ", names[i]);
         printVector(this->rows[i]);
     }
 }

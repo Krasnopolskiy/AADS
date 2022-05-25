@@ -12,6 +12,8 @@ Vector *vectorReverse(Vector *this);
 
 Vector *vectorPush(Vector *this, int value);
 
+void vectorMerge(Vector *v1, Vector *v2);
+
 void vectorEnlarge(Vector *this);
 
 void vectorPop(Vector *this, int index);

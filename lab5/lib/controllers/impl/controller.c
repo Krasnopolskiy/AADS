@@ -106,7 +106,9 @@ void controllerShortestPath(Controller *this) {
 }
 
 void controllerStrongConnectivity(Controller *this) {
-    return;
+    Matrix *res = graphStrongConnectivity(this->graph);
+    printMatrix(res, this->names);
+    matrixFree(res);
 }
 
 void controllerVertexAdd(Controller *this) {

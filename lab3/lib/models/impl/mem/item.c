@@ -3,17 +3,19 @@
 #include "models/item.h"
 
 Item *itemDup(Item *item) {
-    Item *this = malloc(sizeof(Item));
-    this->value = strdup(item->value);
-    this->key1 = strdup(item->key1);
-    this->key2 = strdup(item->key2);
-    this->version = 0;
+    if (item == NULL) return NULL;
+    Item *this = itemInit(
+            strdup(item->value),
+            strdup(item->key1),
+            strdup(item->key2)
+    );
+    this->version = item->version;
     return this;
 }
 
-Item *itemInit(char *content, char *key1, char *key2) {
+Item *itemInit(char *value, char *key1, char *key2) {
     Item *this = malloc(sizeof(Item));
-    this->value = content;
+    this->value = value;
     this->key1 = key1;
     this->key2 = key2;
     this->version = 0;
@@ -22,13 +24,9 @@ Item *itemInit(char *content, char *key1, char *key2) {
 }
 
 Item *itemCopy(Item *this) {
+    if (this == NULL) return NULL;
     Item *item = itemDup(this);
-    do {
-        item->version = this->version;
-        this = itemNext(this);
-        itemConnect(item, itemDup(this));
-        item = itemNext(item);
-    } while (this != NULL);
+    itemConnect(item, itemCopy(this->next));
     return item;
 }
 
@@ -40,7 +38,7 @@ void itemConnect(Item *this, Item *next) {
     if (this->next != NULL) itemConnect(this->next, next);
     else {
         this->next = next;
-        next->version = this->version + 1;
+        if (next != NULL) next->version = this->version + 1;
     }
 }
 

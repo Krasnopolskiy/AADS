@@ -9,15 +9,18 @@ typedef struct Item {
     char *key1;
     char *key2;
 
-    unsigned long version;
+    unsigned version;
     struct Item *next;
 } Item;
 
-Item *itemInit(char *content, char *key1, char *key2);
+Item *itemInit(char *value, char *key1, char *key2);
+
 Item *itemCopy(Item *this);
+
 Item *itemNext(Item *this);
 
 void itemConnect(Item *this, Item *next);
+
 void itemFree(Item *this);
 
 #endif // ITEM_H

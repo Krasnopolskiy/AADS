@@ -32,10 +32,10 @@ int dialogMenu() {
 }
 
 Item *dialogItem() {
-    char *content = getStr("Content: ");
+    char *value = getStr("Value: ");
     char *key1, *key2;
     dialogTwoKeys(&key1, &key2);
-    return itemInit(content, key1, key2);
+    return itemInit(value, key1, key2);
 }
 
 Table *dialogTable() {

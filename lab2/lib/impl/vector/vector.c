@@ -1,10 +1,12 @@
 #include "stdio.h"
 #include "vector.h"
 
-void vectorInit(Vector *this, size_t size) {
+Vector *vectorInit(size_t size) {
+    Vector *this = malloc(sizeof(Vector));
     this->size = size;
     this->used = 0;
     this->data = malloc(sizeof(int) * size);
+    return this;
 }
 
 void vectorPop(Vector *this) {
@@ -23,12 +25,6 @@ void vectorPrint(Vector *this) {
     printf("\n");
 }
 
-void vectorFree(Vector *this) {
-    free(this->data);
-    this->data = NULL;
-    this->used = this->size = 0;
-}
-
 int vectorPush(Vector *this, int value) {
     if (this->used == this->size) return 0;
     this->data[this->used++] = value;
@@ -45,4 +41,10 @@ int vectorTopPop(Vector *this, int *res) {
     if (!vectorTop(this, res)) return 0;
     vectorPop(this);
     return 1;
+}
+
+void vectorFree(Vector *this) {
+    free(this->data);
+    free(this);
+    this = NULL;
 }

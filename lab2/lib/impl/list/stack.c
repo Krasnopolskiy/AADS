@@ -2,9 +2,10 @@
 #include "list.h"
 #include "stack.h"
 
-void stackInit(Stack *this) {
-    this->data = malloc(sizeof(List));
-    listInit(this->data);
+Stack *stackInit() {
+    Stack *this = malloc(sizeof(Stack));
+    this->data = listInit();
+    return this;
 }
 
 void stackPop(Stack *this) {
@@ -17,11 +18,6 @@ void stackCopy(Stack *dest, Stack *src) {
 
 void stackPrint(Stack *this) {
     listPrint(this->data);
-}
-
-void stackFree(Stack *this) {
-    listFree(this->data);
-    free(this->data);
 }
 
 int stackPush(Stack *this, int value) {
@@ -39,4 +35,10 @@ int stackTop(Stack *this, int *result) {
 
 int stackTopPop(Stack *this, int *res) {
     return listTopPop(this->data, res);
+}
+
+void stackFree(Stack *this) {
+    listFree(this->data);
+    free(this);
+    this = NULL;
 }

@@ -1,14 +1,14 @@
 #include "stdlib.h"
-#include "stdio.h"
 
 #include "vector.h"
 #include "io.h"
 #include "stack.h"
 
-void stackInit(Stack *this) {
+Stack *stackInit() {
+    Stack *this = malloc(sizeof(Stack));
     int size = scanSize("Vector size: ");
-    this->data = malloc(sizeof(Vector));
-    vectorInit(0);
+    this->data = vectorInit(size);
+    return this;
 }
 
 void stackPop(Stack *this) {
@@ -21,11 +21,6 @@ void stackCopy(Stack *dest, Stack *src) {
 
 void stackPrint(Stack *this) {
     vectorPrint(this->data);
-}
-
-void stackFree(Stack *this) {
-    vectorFree(this->data);
-    free(this->data);
 }
 
 int stackPush(Stack *this, int value) {
@@ -42,4 +37,10 @@ int stackTop(Stack *this, int *result) {
 
 int stackTopPop(Stack *this, int *res) {
     return vectorTopPop(this->data, res);
+}
+
+void stackFree(Stack *this) {
+    vectorFree(this->data);
+    free(this);
+    this = NULL;
 }

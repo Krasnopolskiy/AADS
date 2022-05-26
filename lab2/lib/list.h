@@ -13,7 +13,7 @@ typedef struct List {
     Node *top;
 } List;
 
-void listInit(List *this);
+List *listInit();
 
 void listPush(List *this, int value);
 
@@ -23,10 +23,10 @@ void listCopy(List *dest, List *src);
 
 void listPrint(List *this);
 
-void listFree(List *this);
-
 int listTop(List *this, int *res);
 
 int listTopPop(List *this, int *res);
+
+void listFree(List *this);
 
 #endif

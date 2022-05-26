@@ -1,15 +1,17 @@
 #include "stdio.h"
 #include "list.h"
 
-void listInit(List *this) {
+List *listInit() {
+    List *this = malloc(sizeof(List));
     this->size = 0;
     this->top = NULL;
+    return this;
 }
 
 void listPush(List *this, int value) {
     Node *new = malloc(sizeof(Node));
     new->value = value;
-    new->name = this->top;
+    new->next = this->top;
     this->top = new;
     this->size++;
 }
@@ -17,7 +19,7 @@ void listPush(List *this, int value) {
 void listPop(List *this) {
     if (this->top == NULL) return;
     Node *tmp = this->top;
-    this->top = this->top->name;
+    this->top = this->top->next;
     this->size--;
     free(tmp);
 }
@@ -26,7 +28,7 @@ void listCopy(List *dest, List *src) {
     Node *tmp = src->top;
     while (tmp != NULL) {
         listPush(dest, tmp->value);
-        tmp = tmp->name;
+        tmp = tmp->next;
     }
 }
 
@@ -34,18 +36,9 @@ void listPrint(List *this) {
     Node *tmp = this->top;
     while (tmp != NULL) {
         printf("%3d ", tmp->value);
-        tmp = tmp->name;
+        tmp = tmp->next;
     }
     printf("\n");
-}
-
-void listFree(List *this) {
-    while (this->top != NULL) {
-        Node *tmp = this->top;
-        this->top = this->top->name;
-        free(tmp);
-    }
-    free(this->top);
 }
 
 int listTop(List *this, int *res) {
@@ -58,4 +51,15 @@ int listTopPop(List *this, int *res) {
     if (!listTop(this, res)) return 0;
     listPop(this);
     return 1;
+}
+
+void listFree(List *this) {
+    while (this->top != NULL) {
+        Node *node = this->top;
+        this->top = this->top->next;
+        free(node);
+    }
+    free(this->top);
+    free(this);
+    this = NULL;
 }

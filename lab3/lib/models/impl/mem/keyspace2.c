@@ -31,16 +31,15 @@ uint64_t hash2(char *str, size_t size) {
 }
 
 int searchEmptyPosition(KeySpace2 *this, char *key) {
-    int size = this->size;
+    size_t size = this->size;
     uint64_t h1 = hash1(key), h2 = hash2(key, size);
     int hash = 0, viewed = -1;
     do {
         viewed++;
         hash = (int) ((h1 + viewed * h2) % size);
     } while (viewed < size && this->busy[hash] == 1);
-    if (viewed < size)
-        return hash;
-    return -1;
+    if (viewed >= size) return -1;
+    return hash;
 }
 
 int searchItemPosition(KeySpace2 *this, char *key) {
@@ -51,9 +50,8 @@ int searchItemPosition(KeySpace2 *this, char *key) {
         viewed++;
         hash = (int) ((h1 + viewed * h2) % size);
     } while (viewed < size && (this->busy[hash] == 0 || strcmp(this->items[hash]->key2, key) != 0));
-    if (viewed < size)
-        return hash;
-    return -1;
+    if (viewed >= size) return -1;
+    return hash;
 }
 
 KeySpace2 *keySpace2Init(size_t size) {
@@ -69,20 +67,17 @@ int keySpace2CanInsert(KeySpace2 *this) {
     return this->used < this->size;
 }
 
-int keySpace2Select(KeySpace2 *this, Item **dest, char *key) {
-    int pos = searchItemPosition(this, key);
-    if (pos != -1) {
-        *dest = this->items[pos];
-        return 1;
-    }
-    return 0;
-}
-
 void keySpace2Insert(KeySpace2 *this, Item *item) {
     int pos = searchEmptyPosition(this, item->key2);
     this->items[pos] = item;
     this->busy[pos] = 1;
     this->used++;
+}
+
+Item *keySpace2Select(KeySpace2 *this, char *key) {
+    int pos = searchItemPosition(this, key);
+    if (pos == -1) return NULL;
+    return this->items[pos];
 }
 
 void keySpace2Drop(KeySpace2 *this, char *key) {
@@ -97,4 +92,5 @@ void keySpace2Free(KeySpace2 *this) {
     free(this->items);
     free(this->busy);
     free(this);
+    this = NULL;
 }

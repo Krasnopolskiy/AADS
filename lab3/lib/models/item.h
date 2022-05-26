@@ -5,7 +5,7 @@
 #define ITEM_H
 
 typedef struct Item {
-    char *content;
+    char *value;
     char *key1;
     char *key2;
 
@@ -14,7 +14,7 @@ typedef struct Item {
 } Item;
 
 Item *itemInit(char *content, char *key1, char *key2);
-Item *itemDup(Item *this);
+Item *itemCopy(Item *this);
 Item *itemNext(Item *this);
 
 void itemConnect(Item *this, Item *next);

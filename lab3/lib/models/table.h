@@ -10,19 +10,27 @@ typedef struct Table {
 } Table;
 
 Table *tableInit(size_t size1, size_t size2);
-Table *tableRange(Table *this, char *key1, char *key2);
 
-Item *tableNextItem(Table *this);
-Item *tableSelect(Table *this, char *key1, char *key2);
-Item *tableSelectSpace1(Table *this, char *key);
-Item *tableSelectSpace2(Table *this, char *key);
-
-int tableCanInsert(Table *this, Item *item);
+int tableCanInsert(Table *this);
 
 void tableInsert(Table *this, Item *item);
+
+Item *tableSelect(Table *this, char *key1, char *key2);
+
 void tableDrop(Table *this, char *key1, char *key2);
-void tableDropSpace1(Table *this, char *key);
-void tableDropSpace2(Table *this, char *key);
+
+Item *tableSelectKeySpace1(Table *this, char *key);
+
+Item *tableSelectKeySpace2(Table *this, char *key);
+
+Table *tableSelectRange(Table *this, char *key1, char *key2);
+
+void tableDropKeySpace1(Table *this, char *key);
+
+void tableDropKeySpace2(Table *this, char *key);
+
+Item *tableNextItem(Table *this, Item *item);
+
 void tableFree(Table *this);
 
 #endif // TABLE_H

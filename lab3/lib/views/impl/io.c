@@ -1,4 +1,8 @@
-#include "../../../../lab4/lib/views/io.h"
+#include "stdlib.h"
+#include "stdio.h"
+#include "string.h"
+
+#include "views/io.h"
 
 char *getStr(char *message) {
     char buf[81] = {0};
@@ -20,10 +24,8 @@ char *getStr(char *message) {
         }
     } while (n > 0);
 
-    if (len > 0)
-        res[len] = '\0';
-    else
-        res = calloc(1, sizeof(char));
+    if (len > 0) res[len] = '\0';
+    else res = calloc(1, sizeof(char));
     return res;
 }
 
@@ -36,15 +38,13 @@ int parseInt(char *str, int *res) {
     if (str[0] == '0' && strlen(str) > 1) return 0;
 
     if (str[0] == '-') {
-        if (strlen(str) < 2 || str[1] > '9' || str[1] <= '0')
-            return 0;
+        if (strlen(str) < 2 || str[1] > '9' || str[1] <= '0') return 0;
         i = 1;
         sign = -1;
     }
 
     for (; i < strlen(str); i++) {
-        if (str[i] > '9' || str[i] < '0')
-            return 0;
+        if (str[i] > '9' || str[i] < '0') return 0;
         *res = *res * 10 + (str[i] - '0');
     }
     *res *= sign;
@@ -54,22 +54,22 @@ int parseInt(char *str, int *res) {
 
 int scanInt(char *message) {
     int success = 0, res = 0;
-    while (!success) {
+    do {
         char *str = getStr(message);
         success = parseInt(str, &res);
         if (!success)
             printf("Invalid input. Try again\n");
         free(str);
-    }
+    } while (!success);
     return res;
 }
 
-size_t scanSize(char *message) {
-    size_t size = 0;
-    while (size < 1) {
+int scanSize(char *message) {
+    int size = 0;
+    do {
         size = scanInt(message);
         if (size < 1)
             printf("Invalid size. Try again\n");
-    }
+    } while (size < 1);
     return size;
 }

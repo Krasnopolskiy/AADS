@@ -10,14 +10,17 @@ typedef struct KeySpace1 {
 } KeySpace1;
 
 KeySpace1 *keySpace1Init(size_t size);
-KeySpace1 *keySpace1Range(KeySpace1 *this, char *key1, char *key2);
-
-Item *keySpace1Select(KeySpace1 *this, char *key);
 
 int keySpace1CanInsert(KeySpace1 *this);
 
 void keySpace1Insert(KeySpace1 *this, Item *item);
+
+Item *keySpace1Select(KeySpace1 *this, char *key);
+
 void keySpace1Drop(KeySpace1 *this, char *key);
+
+KeySpace1 *keySpace1SelectRange(KeySpace1 *this, char *key1, char *key2);
+
 void keySpace1Free(KeySpace1 *this);
 
 #endif // KEYSPACE1_H

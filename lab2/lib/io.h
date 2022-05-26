@@ -1,7 +1,7 @@
 #ifndef IO_H
 #define IO_H
 
-char *getStr();
+char *getStr(char *message);
 
 int parseInt(char *str, int *res);
 

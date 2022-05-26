@@ -16,27 +16,23 @@ int sum_digits(int n) {
 
 int main() {
     int m = scanSize("m: ");
-    Matrix src, res;
-    matrixInit(&src, m);
-    matrixInit(&res, m);
-
-    matrixScan(&src);
+    Matrix *src = matrixScan(m);
+    Matrix *res = matrixInit(m);
 
     for (int i = 0; i < m; i++) {
-        Vector current = src.rows[i];
-        int last = sum_digits(current.data[current.used - 1]);
-
-        for (int j = 0; j < current.used; j++)
-            if (sum_digits(current.data[j]) == last)
-                vectorPush(&res.rows[i], current.data[j]);
+        Vector *row = src->rows[i];
+        int last = sum_digits(vectorLast(row));
+        for (int j = 0; j < row->size; j++)
+            if (sum_digits(row->data[j]) == last)
+                vectorPush(res->rows[i], row->data[j]);
     }
 
     printf("Source matrix:\n");
-    matrixPrint(&src);
+    matrixPrint(src);
     printf("Result matrix:\n");
-    matrixPrint(&res);
+    matrixPrint(res);
 
-    matrixFree(&src);
-    matrixFree(&res);
+    matrixFree(src);
+    matrixFree(res);
     return 0;
 }

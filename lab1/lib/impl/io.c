@@ -4,10 +4,11 @@
 
 #include "io.h"
 
-char *getStr() {
+char *getStr(char *message) {
     char buf[81] = {0};
     char *res = NULL;
     int len = 0, n = 0;
+    printf("%s", message);
     do {
         n = scanf("%80[^\n]", buf);
         if (n < 0) {
@@ -54,8 +55,7 @@ int parseInt(char *str, int *res) {
 int scanInt(char *message) {
     int success = 0, res = 0;
     do {
-        printf("%s", message);
-        char *str = getStr();
+        char *str = getStr(message);
         success = parseInt(str, &res);
         if (!success)
             printf("Invalid input. Try again\n");

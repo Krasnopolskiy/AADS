@@ -5,12 +5,12 @@
 
 typedef struct Matrix {
     size_t size;
-    Vector *rows;
+    Vector **rows;
 } Matrix;
 
-void matrixInit(Matrix *this, size_t size);
+Matrix *matrixInit(size_t size);
 
-void matrixScan(Matrix *this);
+Matrix *matrixScan(size_t size);
 
 void matrixPrint(Matrix *this);
 

@@ -3,17 +3,18 @@
 
 typedef struct Vector {
     size_t size;
-    size_t used;
     int *data;
 } Vector;
 
-void vectorInit(Vector *this);
+Vector *vectorInit(size_t size);
+
+void vectorScan(Vector *this);
 
 void vectorPush(Vector *this, int value);
 
-void vectorCopy(Vector *dest, Vector *src);
+int vectorLast(Vector *this);
 
-void vectorScan(Vector *this);
+void vectorCopy(Vector *dest, Vector *src);
 
 void vectorPrint(Vector *this);
 

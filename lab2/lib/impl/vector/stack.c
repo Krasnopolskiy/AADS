@@ -8,7 +8,7 @@
 void stackInit(Stack *this) {
     int size = scanSize("Vector size: ");
     this->data = malloc(sizeof(Vector));
-    vectorInit(this->data, size);
+    vectorInit(0);
 }
 
 void stackPop(Stack *this) {

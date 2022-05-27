@@ -10,6 +10,8 @@ KeySpace1 *fileKeySpace1Load(offset ptr);
 
 void fileKeySpace1Update(offset ptr, KeySpace1 *keySpace);
 
-void fileKeySpace1Pop(offset ptr);
+int fileKeySpace1Pop(offset ptr);
+
+void keySpace1FreeMem(KeySpace1 *this);
 
 #endif // KEYSPACE1_HELPER_H

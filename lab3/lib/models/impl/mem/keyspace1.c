@@ -1,7 +1,7 @@
 #include "string.h"
 #include "models/keyspace1.h"
 
-KeySpace1 *keySpace1Init(size_t size) {
+KeySpace1 *keySpace1Init(unsigned int size) {
     KeySpace1 *this = malloc(sizeof(KeySpace1));
     this->items = calloc(size, sizeof(Item *));
     this->size = size;
@@ -39,7 +39,7 @@ void keySpace1Drop(KeySpace1 *this, char *key) {
 KeySpace1 *keySpace1SelectRange(KeySpace1 *this, char *key1, char *key2) {
     KeySpace1 *keySpace = keySpace1Init(this->used);
     for (int i = 0; i < this->used; i++)
-        if (strcmp(this->items[i]->key1, key1) >= 0 && strcmp(this->items[i]->key2, key2) <= 0)
+        if (strcmp(this->items[i]->key1, key1) >= 0 && strcmp(this->items[i]->key1, key2) <= 0)
             keySpace1Insert(keySpace, itemCopy(this->items[i]));
     return keySpace;
 }

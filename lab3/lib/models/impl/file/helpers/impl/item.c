@@ -65,3 +65,11 @@ int fileItemPop(offset ptr) {
     fclose(file);
     return off;
 }
+
+void itemFreeMem(Item *this) {
+    free(this->value);
+    free(this->key1);
+    free(this->key2);
+    free(this);
+    this = NULL;
+}

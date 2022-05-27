@@ -39,8 +39,8 @@ Item *dialogItem() {
 }
 
 Table *dialogTable() {
-    size_t size1 = scanSize("Key space 1 size: ");
-    size_t size2 = scanSize("Key space 2 size: ");
+    unsigned size1 = scanSize("Key space 1 size: ");
+    unsigned size2 = scanSize("Key space 2 size: ");
     return tableInit(size1, size2);
 }
 

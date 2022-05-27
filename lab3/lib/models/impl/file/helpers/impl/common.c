@@ -10,9 +10,9 @@ void fileInit() {
     fclose(offsets);
 }
 
-void fileBytesPop(FILE *file, offset ptr, size_t count) {
+void fileBytesPop(FILE *file, offset ptr, unsigned count) {
     fseek(file, 0, SEEK_END);
-    size_t fileSize = ftell(file);
+    unsigned fileSize = ftell(file);
     fseek(file, (long) ptr, SEEK_SET);
     for (offset pos = ptr; pos + count < fileSize; pos = ftell(file)) {
         char tmp = 0;
@@ -62,7 +62,7 @@ void fileOffsetAppend(offset ptr) {
     fclose(file);
 }
 
-void fileOffsetPop(offset ptr, size_t size) {
+void fileOffsetPop(offset ptr, unsigned size) {
     FILE *memory = fopen(MEMORY, MODE);
     FILE *offsets = fopen(OFFSETS, MODE);
     offset offset_ptr;

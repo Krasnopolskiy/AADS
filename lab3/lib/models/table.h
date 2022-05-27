@@ -9,7 +9,7 @@ typedef struct Table {
     KeySpace2 *keySpace2;
 } Table;
 
-Table *tableInit(size_t size1, size_t size2);
+Table *tableInit(unsigned size1, unsigned size2);
 
 int tableCanInsert(Table *this);
 

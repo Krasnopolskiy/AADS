@@ -1,6 +1,6 @@
 #include "models/table.h"
 
-Table *tableInit(size_t size1, size_t size2) {
+Table *tableInit(unsigned size1, unsigned size2) {
     Table *this = malloc(sizeof(Table));
     this->keySpace1 = keySpace1Init(size1);
     this->keySpace2 = keySpace2Init(size2);

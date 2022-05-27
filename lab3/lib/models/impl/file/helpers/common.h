@@ -12,7 +12,7 @@ typedef unsigned offset;
 
 void fileInit();
 
-void fileBytesPop(FILE *file, offset ptr, size_t count);
+void fileBytesPop(FILE *file, offset ptr, unsigned count);
 
 offset fileStringAppend(char *str);
 
@@ -22,6 +22,6 @@ int fileStringPop(FILE *file, offset ptr);
 
 void fileOffsetAppend(offset ptr);
 
-void fileOffsetPop(offset ptr, size_t size);
+void fileOffsetPop(offset ptr, unsigned size);
 
 #endif // COMMON_H

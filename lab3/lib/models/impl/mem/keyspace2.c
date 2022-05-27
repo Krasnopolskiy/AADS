@@ -18,7 +18,7 @@ uint64_t hash1(char *str) {
     return hash;
 }
 
-uint64_t hash2(char *str, size_t size) {
+uint64_t hash2(char *str, unsigned size) {
     uint64_t hash = 1;
     int seed = 0;
     for (int i = 0; i < strlen(str); i++) {
@@ -31,7 +31,7 @@ uint64_t hash2(char *str, size_t size) {
 }
 
 int searchEmptyPosition(KeySpace2 *this, char *key) {
-    size_t size = this->size;
+    unsigned size = this->size;
     uint64_t h1 = hash1(key), h2 = hash2(key, size);
     int hash = 0, viewed = -1;
     do {
@@ -54,7 +54,7 @@ int searchItemPosition(KeySpace2 *this, char *key) {
     return hash;
 }
 
-KeySpace2 *keySpace2Init(size_t size) {
+KeySpace2 *keySpace2Init(unsigned size) {
     KeySpace2 *this = malloc(sizeof(KeySpace2));
     this->items = calloc(size, sizeof(Item *));
     this->busy = calloc(size, sizeof(int));

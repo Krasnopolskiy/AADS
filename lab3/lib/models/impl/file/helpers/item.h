@@ -12,4 +12,6 @@ void fileItemUpdate(offset ptr, Item *item);
 
 int fileItemPop(offset ptr);
 
+void itemFreeMem(Item *this);
+
 #endif // ITEM_HELPER_H

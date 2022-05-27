@@ -1,17 +1,8 @@
 #include "stdlib.h"
 #include "string.h"
 
-#include "helpers/common.h"
 #include "helpers/item.h"
 #include "models/item.h"
-
-void itemFreeMem(Item *this) {
-    // this: Item*
-    free(this->value);
-    free(this->key1);
-    free(this->key2);
-    free(this);
-}
 
 Item *itemDup(Item *item) {
     // this: Item*
@@ -79,10 +70,10 @@ void itemConnect(Item *this, Item *next) {
 void itemFree(Item *this) {
     // this: offset
     if (this == NULL) return;
-    offset pos = this;
+    offset ptr = this;
     Item *item = fileItemLoad(this);
     offset off = fileItemPop(this);
-    if (pos <= item->next) item->next = (offset)item->next - 36;
+    if (ptr <= item->next) item->next = (offset)item->next - off;
     itemFree(item->next);
     itemFreeMem(item);
     this = NULL;

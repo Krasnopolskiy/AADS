@@ -4,12 +4,12 @@
 #define KEYSPACE1_H
 
 typedef struct KeySpace1 {
-    size_t size;
-    size_t used;
+    unsigned size;
+    unsigned used;
     Item **items;
 } KeySpace1;
 
-KeySpace1 *keySpace1Init(size_t size);
+KeySpace1 *keySpace1Init(unsigned size);
 
 int keySpace1CanInsert(KeySpace1 *this);
 

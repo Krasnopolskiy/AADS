@@ -4,13 +4,13 @@
 #define KEYSPACE2_H
 
 typedef struct KeySpace2 {
-    size_t size;
-    size_t used;
+    unsigned size;
+    unsigned used;
     int *busy;
     Item **items;
 } KeySpace2;
 
-KeySpace2 *keySpace2Init(size_t size);
+KeySpace2 *keySpace2Init(unsigned size);
 
 int keySpace2CanInsert(KeySpace2 *this);
 

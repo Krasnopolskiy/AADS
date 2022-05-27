@@ -2,12 +2,11 @@
 #include "models/impl/file/helpers/common.h"
 
 void fileInit() {
-    FILE *memory = fopen(MEMORY, "ab+");
-    fseek(memory, 0, SEEK_SET);
+    FILE *memory = fopen(MEMORY, "w");
     unsigned pad = -1;
     fwrite(&pad, sizeof(unsigned), 1, memory);
     fclose(memory);
-    FILE *offsets = fopen(OFFSETS, "ab+");
+    FILE *offsets = fopen(OFFSETS, "w");
     fclose(offsets);
 }
 

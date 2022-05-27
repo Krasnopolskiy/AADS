@@ -10,6 +10,6 @@ Item *fileItemLoad(offset ptr);
 
 void fileItemUpdate(offset ptr, Item *item);
 
-void fileItemPop(offset ptr);
+int fileItemPop(offset ptr);
 
 #endif // ITEM_HELPER_H

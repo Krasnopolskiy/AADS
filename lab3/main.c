@@ -6,10 +6,12 @@
 
 int main() {
     fileInit();
-    Item *item1 = itemInit(strdup("value"), strdup("key1"), strdup("key2"));;
-    Item *item2 = itemInit(strdup("kek"), strdup("lol"), strdup("kek"));;
+    Item *item1 = itemInit(strdup("value"), strdup("key1"), strdup("key2"));
+    Item *item2 = itemInit(strdup("kek"), strdup("lol"), strdup("kek"));
+    itemConnect(item1, item2);
+    Item *new = itemCopy(item1);
     itemFree(item1);
-    itemFree(16);
+    itemFree(item1);
 }
 
 

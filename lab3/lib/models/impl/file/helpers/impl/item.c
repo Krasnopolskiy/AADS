@@ -25,12 +25,13 @@ offset fileItemAppend(Item *item) {
 
 Item *fileItemLoad(offset ptr) {
     Item *item = malloc(sizeof(Item));
+    item->next = NULL;
     FILE *file = fopen(MEMORY, MODE);
     fseek(file, (long) ptr, SEEK_SET);
     fread(&item->value, sizeof(offset), 1, file);
     fread(&item->key1, sizeof(offset), 1, file);
     fread(&item->key2, sizeof(offset), 1, file);
-    fread(&item->version, sizeof(int), 1, file);
+    fread(&item->version, sizeof(unsigned), 1, file);
     fread(&item->next, sizeof(offset), 1, file);
     fclose(file);
     item->value = fileStringLoad((offset) item->value);
@@ -47,8 +48,8 @@ void fileItemUpdate(offset ptr, Item *item) {
     fclose(file);
 }
 
-void fileItemPop(offset ptr) {
-    offset value, key1, key2, next, off = 0;
+int fileItemPop(offset ptr) {
+    offset value, key1, key2, off = 0;
     FILE *file = fopen(MEMORY, MODE);
 
     fseek(file, (long) ptr, SEEK_SET);
@@ -60,5 +61,7 @@ void fileItemPop(offset ptr) {
     off += fileStringPop(file, key2);
     fileOffsetPop(ptr - off, ITEM_SIZE);
     fileBytesPop(file, ptr - off, ITEM_SIZE);
+    off += ITEM_SIZE;
     fclose(file);
+    return off;
 }

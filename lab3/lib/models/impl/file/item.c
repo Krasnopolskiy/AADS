@@ -15,7 +15,7 @@ void itemFreeMem(Item *this) {
 
 Item *itemDup(Item *item) {
     // this: Item*
-    if ((offset)item == NULL) return NULL;
+    if (item == NULL) return NULL;
     Item *this = malloc(sizeof(Item));
     this->value = strdup(item->value);
     this->key1 = strdup(item->key1);
@@ -39,7 +39,7 @@ Item *itemInit(char *value, char *key1, char *key2) {
 
 Item *itemCopy(Item *this) {
     // this: offset
-    if ((offset)this == NULL) return NULL;
+    if (this == NULL) return NULL;
     this = fileItemLoad(this);
     Item *item = itemDup(this);
     offset ptr = fileItemAppend(item);
@@ -66,7 +66,7 @@ void itemConnect(Item *this, Item *next) {
     else {
         this->next = next;
         fileItemUpdate(ptr1, this);
-        if ((offset)next != NULL) {
+        if (next != NULL) {
             next = fileItemLoad(next);
             next->version = this->version + 1;
             fileItemUpdate(ptr2, next);
@@ -78,9 +78,11 @@ void itemConnect(Item *this, Item *next) {
 
 void itemFree(Item *this) {
     // this: offset
-    if ((offset)this == NULL) return;
+    if (this == NULL) return;
+    offset pos = this;
     Item *item = fileItemLoad(this);
-    fileItemPop(this);
+    offset off = fileItemPop(this);
+    if (pos <= item->next) item->next = (offset)item->next - 36;
     itemFree(item->next);
     itemFreeMem(item);
     this = NULL;

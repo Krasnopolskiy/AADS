@@ -24,6 +24,7 @@ offset fileItemAppend(Item *item) {
 }
 
 Item *fileItemLoad(offset ptr) {
+    if (ptr == NULL) return NULL;
     Item *item = malloc(sizeof(Item));
     item->next = NULL;
     FILE *file = fopen(MEMORY, MODE);
@@ -49,21 +50,28 @@ void fileItemUpdate(offset ptr, Item *item) {
 }
 
 int fileItemPop(offset ptr) {
+    if (ptr == NULL) return NULL;
+
+    Item *item = fileItemLoad(ptr);
+    offset next = item->next;
+    itemFreeMem(item);
+
     offset value, key1, key2, off = 0;
     FILE *file = fopen(MEMORY, MODE);
 
     fseek(file, (long) ptr, SEEK_SET);
     fread(&value, sizeof(offset), 1, file);
-    off += fileStringPop(file, value);
     fread(&key1, sizeof(offset), 1, file);
-    off += fileStringPop(file, key1);
     fread(&key2, sizeof(offset), 1, file);
-    off += fileStringPop(file, key2);
+    off += fileStringPop(file, value);
+    off += fileStringPop(file, key1 - off);
+    off += fileStringPop(file, key2 - off);
     fileOffsetPop(ptr - off, ITEM_SIZE);
     fileBytesPop(file, ptr - off, ITEM_SIZE);
     off += ITEM_SIZE;
     fclose(file);
-    return off;
+
+    return off + (next == 0 ? 0 : fileItemPop(next - off));
 }
 
 void itemFreeMem(Item *this) {

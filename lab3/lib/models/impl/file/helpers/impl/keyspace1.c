@@ -43,8 +43,7 @@ void fileKeySpace1Update(offset ptr, KeySpace1 *keySpace) {
 int fileKeySpace1Pop(offset ptr) {
     KeySpace1 *keySpace1 = fileKeySpace1Load(ptr);
     for (int i = 0; i < keySpace1->used; i++) {
-        offset off = fileItemPop(keySpace1->items[i]);
-        if (keySpace1->items[i] < ptr) ptr -= off;
+        fileItemPop(keySpace1->items[i]);
         keySpace1FreeMem(keySpace1);
         keySpace1 = fileKeySpace1Load(ptr);
     }

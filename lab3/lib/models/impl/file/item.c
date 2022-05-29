@@ -43,7 +43,8 @@ Item *itemCopy(Item *this) {
 Item *itemNext(Item *this) {
     // this: offset
     this = fileItemLoad(this);
-    offset next = fileItemLoad(this->next);
+    if (this == NULL) return NULL;
+    Item *next = fileItemLoad(this->next);
     itemFreeMem(this);
     return next;
 }
@@ -69,12 +70,5 @@ void itemConnect(Item *this, Item *next) {
 
 void itemFree(Item *this) {
     // this: offset
-    if (this == NULL) return;
-    offset ptr = this;
-    Item *item = fileItemLoad(this);
-    offset off = fileItemPop(this);
-    if (ptr <= item->next) item->next = (offset)item->next - off;
-    itemFree(item->next);
-    itemFreeMem(item);
-    this = NULL;
+    itemFreeMem(this);
 }

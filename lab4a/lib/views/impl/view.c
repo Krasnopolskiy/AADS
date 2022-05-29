@@ -10,9 +10,9 @@ char *menuCommands[MENU_ITEMS] = {
         "Drop item",
         "Draw tree",
         "Search item by key",
-        "Search item with the smallest key bigger than the specified",
+        "Search item with the smallest key",
         "Tree profiling",
-        "Find a value in a binary file",
+        "Count frequencies in a binary file",
         "Save tree to file",
         "Load tree from file",
         "Exit"
@@ -21,14 +21,16 @@ char *menuCommands[MENU_ITEMS] = {
 void writeNodeToFile(Node *node) {
     FILE *file = fopen("tree.dot", "a+");
     if (node->left != NULL) {
-        fprintf(file, "%d -> %d ", node->key, node->left->key);
+        fprintf(file, "%d[%d] -> %d[%d] ", node->key, node->version, node->left->key, node->left->version);
         fclose(file);
         writeNodeToFile(node->left);
-    }
-    if (node->right != NULL) {
-        fprintf(file, "%d -> %d ", node->key, node->right->key);
+    } else if (node->right != NULL) {
+        fprintf(file, "%d[%d] -> %d[%d] ", node->key, node->version, node->right->key, node->right->version);
         fclose(file);
         writeNodeToFile(node->right);
+    } else {
+        fprintf(file, "%d[%d] ", node->key, node->version);
+        fclose(file);
     }
 }
 
@@ -52,6 +54,10 @@ unsigned dialogValue() {
     return scanInt("Value: ");
 }
 
+unsigned dialogVersion() {
+    return scanInt("Version: ");
+}
+
 void drawTree(Node *root) {
     FILE *file = fopen("tree.dot", "w");
     fprintf(file, "strict digraph { node [shape=circle style=filled] ");
@@ -69,14 +75,10 @@ void printNode(Node *this) {
     else printf("Key: '%d'; value: '%d'\n", this->key, this->value);
 }
 
-void printOffset(unsigned offset) {
-    printf("Offset: %d\n", offset);
-}
-
 void errorKeyNotFound(unsigned key) {
     printf("Key '%d' not found\n", key);
 }
 
-void errorDuplicateKey(unsigned key) {
-    printf("Key '%d' is duplicated\n", key);
+void errorVersionNotFound(unsigned version) {
+    printf("Version not found\n");
 }

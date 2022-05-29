@@ -17,11 +17,11 @@ void controllerDrawTree(Controller *this);
 
 void controllerSearch(Controller *this);
 
-void controllerSearchAfter(Controller *this);
+void controllerSearchMinimum(Controller *this);
 
 void controllerTreeProfiling(Controller *this);
 
-void controllerSearchInFile(Controller *this);
+void controllerCountFrequencies(Controller *this);
 
 void controllerSaveToFile(Controller *this);
 
@@ -34,28 +34,39 @@ controller controllers[] = {
         controllerDrop,
         controllerDrawTree,
         controllerSearch,
-        controllerSearchAfter,
+        controllerSearchMinimum,
         controllerTreeProfiling,
-        controllerSearchInFile,
+        controllerCountFrequencies,
         controllerSaveToFile,
         controllerLoadFromFile
 };
 
-Node *controllerLoadOffsets() {
+Node *controllerLoadFrequencies() {
     FILE *file = fopen("data.bin", "rb");
     Node *root = nodeInit(0, 0);
     while (!feof(file)) {
         unsigned value;
         fread(&value, sizeof(unsigned), 1, file);
-        root = nodeInsert(root, value, ftell(file));
+        Node *node = nodeSearch(root, value, 0);
+        if (node == NULL) root = nodeInsert(root, value, 1);
+        else node->value++;
     }
     return root;
+}
+
+void controllerWriteFrequency(Node *this) {
+    if (this == NULL) return;
+    controllerWriteFrequency(this->left);
+    FILE *file = fopen("frequencies.csv", "a");
+    fprintf(file, "%d - %d\n", this->key, this->value);
+    fclose(file);
+    controllerWriteFrequency(this->right);
 }
 
 Controller *controllerInit() {
     Controller *this = malloc(sizeof(Controller));
     this->root = NULL;
-    this->offsets = controllerLoadOffsets();
+    this->frequencies = controllerLoadFrequencies();
     return this;
 }
 
@@ -71,14 +82,19 @@ void controllerRun(Controller *this) {
 void controllerInsert(Controller *this) {
     unsigned key = dialogKey();
     unsigned value = dialogValue();
-    if (nodeSearch(this->root, key) != NULL) errorDuplicateKey(key);
-    else this->root = nodeInsert(this->root, key, value);
+    this->root = nodeInsert(this->root, key, value);
 }
 
 void controllerDrop(Controller *this) {
     unsigned key = dialogKey();
-    if (nodeSearch(this->root, key) == NULL) errorKeyNotFoundError(key);
-    else this->root = nodeDrop(this->root, key);
+    Node *node = nodeSearch(this->root, key, 0);
+    if (node == NULL) errorKeyNotFound(key);
+    if (nodeIsDuplicated(node)) {
+        unsigned version = dialogVersion();
+        node = nodeSearch(this->root, key, version);
+        if (node == NULL) errorVersionNotFound(version);
+        else this->root = nodeDrop(this->root, key, version);
+    } else this->root = nodeDrop(this->root, key, 0);
 }
 
 void controllerDrawTree(Controller *this) {
@@ -87,16 +103,24 @@ void controllerDrawTree(Controller *this) {
 
 void controllerSearch(Controller *this) {
     unsigned key = dialogKey();
-    Node *node = nodeSearch(this->root, key);
-    if (node == NULL) errorKeyNotFoundError(0);
-    else printNode(node);
+    Node *node = nodeSearch(this->root, key, 0);
+    if (node == NULL) errorKeyNotFound(key);
+    if (nodeIsDuplicated(node)) {
+        unsigned version = dialogVersion();
+        node = nodeSearch(this->root, key, version);
+        if (node == NULL) errorVersionNotFound(version);
+        else printNode(node);
+    } else printNode(node);
 }
 
-void controllerSearchAfter(Controller *this) {
-    unsigned key = dialogKey();
-    Node *node = NULL;
-    nodeSearchAfter(this->root, key, &node);
-    printNode(node);
+void controllerSearchMinimum(Controller *this) {
+    Node *node = nodeSearchMinimum(this->root, 0);
+    if (nodeIsDuplicated(node)) {
+        unsigned version = dialogVersion();
+        node = nodeSearchMinimum(this->root, version);
+        if (node == NULL) errorVersionNotFound(version);
+        else printNode(node);
+    } else printNode(node);
 }
 
 void controllerTreeProfiling(Controller *this) {
@@ -105,17 +129,14 @@ void controllerTreeProfiling(Controller *this) {
     srand(clock());
     for (unsigned i = 0; i < PROFILING_SIZE; i++) {
         root = nodeInsert(root, i, i);
-        unsigned iterations = nodeProfilingSearchAfter(root, 0, NULL);
+        unsigned iterations = nodeProfilingSearchMinimum(root);
         fprintf(file, "%d,%d\n", i, iterations);
     }
     fclose(file);
 }
 
-void controllerSearchInFile(Controller *this) {
-    unsigned key = dialogValue();
-    Node *node = nodeSearch(this->offsets, key);
-    if (node == NULL) errorKeyNotFoundError(key);
-    else printOffset(node->value);
+void controllerCountFrequencies(Controller *this) {
+    controllerWriteFrequency(this->root);
 }
 
 void controllerSaveToFile(Controller *this) {
@@ -138,6 +159,6 @@ void controllerLoadFromFile(Controller *this) {
 
 void controllerFree(Controller *this) {
     nodeFree(this->root);
-    nodeFree(this->offsets);
+    nodeFree(this->frequencies);
     free(this);
 }

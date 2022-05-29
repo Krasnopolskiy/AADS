@@ -9,14 +9,14 @@ unsigned dialogKey();
 
 unsigned dialogValue();
 
+unsigned dialogVersion();
+
 void drawTree(Node *root);
 
 void printNode(Node *this);
 
-void printOffset(unsigned offset);
+void errorKeyNotFound(unsigned key);
 
-void errorKeyNotFoundError(unsigned key);
-
-void errorDuplicateKey(unsigned key);
+void errorVersionNotFound(unsigned version);
 
 #endif // VIEW_H
